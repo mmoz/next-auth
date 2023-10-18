@@ -1,6 +1,5 @@
 import { users } from "@/app/helpers/constants";
-import { loginFetch } from "@/app/lib/api";
-import NextAuth, { NextAuthOptions } from "next-auth";
+ import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 
@@ -33,7 +32,6 @@ export const authOptions: NextAuthOptions = {
 
                     });
                     const data = await res.json();
-                    console.log(data)
 
                     if (data.code === 200) {
 

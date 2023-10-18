@@ -3,14 +3,12 @@
 import { FormEvent, FormEventHandler, useState } from "react";
 import { signIn } from 'next-auth/react'
 import { useRouter } from "next/navigation";
-
-
 export default function Login() {
 
     const [username, setUsername] = useState<string>('')
     const [password, setPassword] = useState<string>('')
-    const router = useRouter()
 
+    const router = useRouter()
 
     const login: FormEventHandler<HTMLFormElement> = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault()
@@ -25,10 +23,6 @@ export default function Login() {
             router.push("/dashboard")
         }
     }
-
-
-
-
     return (
         <main className="w-full flex justify-center items-center">
             <div className="container">
