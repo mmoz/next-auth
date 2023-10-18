@@ -1,7 +1,9 @@
 export default function protectedRoute() {
     return (
-        <div>
-            <h1>Protected Route</h1>
-        </div>
+        <main className="h-[100dvh]">
+            <div className="flex justify-center w-full mt-5">
+                <h1>Protected Route</h1>
+            </div>
+        </main>
     )
 }
