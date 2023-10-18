@@ -24,7 +24,7 @@ export const authOptions: NextAuthOptions = {
 
                 try {
 
-                    const res = await fetch(``, {
+                    const res = await fetch(`http://10.10.10.121:9090/api/auth/signin?username=${credentials.username}&password=${credentials.password}`, {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json",
