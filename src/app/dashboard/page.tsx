@@ -1,56 +1,75 @@
 
-"use client"
-import { useSession, signOut } from "next-auth/react"
-import { useRouter } from "next/navigation"
-import { Card, CardHeader, CardBody, Image } from "@nextui-org/react";
-import { Skeleton } from '@nextui-org/react';
-import { useState } from "react";
+import CardComponent from "@/component/Card";
+
 
 export default function Dashboard() {
 
-    const { data: session, status } = useSession()
-    const router = useRouter()
-    const [isLoading, setIsLoading] = useState(true);
+    const mockupdata = [
+        {
+            greeting: "Hello",
+            sub1: "Daily Mix",
+            sub2: "12 Tracks",
+            name: "Frontend Radio",
+            img: "https://images.unsplash.com/photo-1619983081563-430f63602796?auto=format&fit=crop&q=80&w=1887&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+            tracks: 12
 
-    const userName = session?.user?.userFirstname
+        },
+        {
+            greeting: "Hello",
+            sub1: "Daily Day",
+            sub2: "14 Tracks",
+            name: "Disco Radio",
+            img: "https://images.unsplash.com/photo-1619983081563-430f63602796?auto=format&fit=crop&q=80&w=1887&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+            tracks: 12
+        },
+        {
+            greeting: "Hello",
+            sub1: "Daily Tracks",
+            sub2: "18 Tracks",
+            name: "Backend Radio",
+            img: "https://images.unsplash.com/photo-1619983081563-430f63602796?auto=format&fit=crop&q=80&w=1887&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+            tracks: 12
 
+        },
+        {
+            greeting: "Hello",
+            sub1: "Daily Task",
+            sub2: "18 Tracks",
+            name: "API Radio",
+            img: "https://images.unsplash.com/photo-1619983081563-430f63602796?auto=format&fit=crop&q=80&w=1887&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+            tracks: 12
+        },
+        {
+            greeting: "Hello",
+            sub1: "Daily Chill",
+            sub2: "11 Tracks",
+            name: "Chill Radio",
+            img: "https://images.unsplash.com/photo-1619983081563-430f63602796?auto=format&fit=crop&q=80&w=1887&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+            tracks: 12
+        }
+    ]
 
     return (
-        <main className="h-[100dvh]">
+        <main className="">
             <div className="flex-col">
-                <div className="flex justify-center mt-5">
+                <div className="flex justify-center mt-5 font-bold text-[#113946]">
                     <span>Dashboard </span>
                 </div>
-                <div className="flex justify-center w-full mt-5">
-                    <Card className=" w-fit flex px-20 py-10">
-                        <CardHeader className="pb-0  sm:order-2  px-4 flex-col items-center">
-                            <p className="text-tiny uppercase font-bold"> Hello {userName}</p>
-                            <p className="text-tiny uppercase font-bold">Daily Mix</p>
-                            <small className="text-default-500">12 Tracks</small>
-                            <h4 className="font-bold text-large">Frontend Radio</h4>
-                        </CardHeader>
-                        <CardBody className="overflow-visible py-2 flex justify-center items-center w-full">
-                            {isLoading ? <Skeleton className="rounded-lg">
-                                <Image
-                                    alt="Card background"
-                                    className="objct-cover rounded-xl "
-                                    src="https://images.unsplash.com/photo-1695509038650-7dd05e5cf6a4?auto=format&fit=crop&q=80&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&w=1887"
-                                    width={160}
-                                    onLoad={() => setIsLoading(false)}
-                                />
-                            </Skeleton> : <Image
-                                alt="Card background"
-                                className="object-cover rounded-xl "
-                                src="https://images.unsplash.com/photo-1695509038650-7dd05e5cf6a4?auto=format&fit=crop&q=80&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&w=1887"
-                                width={160}
-                            />}
-
-                        </CardBody>
-                    </Card>
+                <div className="flex justify-center mt-5">
+                    <div className="w-[90vw]">
+                        <div className="grid grid-cols-4 gap-2 md:grid-cols-2 sm:grid-cols-2" >
+                            {mockupdata && mockupdata.map((item, index) => {
+                                return (
+                                    <div className={index === mockupdata.length - 1 ? "col-span-4 md:col-span-1 sm:col-span-1" : ""} key={index}>
+                                        <CardComponent  {...item} />
+                                    </div>
+                                )
+                            }
+                            )}
+                        </div>
+                    </div>
                 </div>
             </div>
-
-
         </main>
     );
 }
