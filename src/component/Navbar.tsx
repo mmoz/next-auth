@@ -1,9 +1,10 @@
 
 "use client"
 import React, { useEffect } from "react";
-import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Button, NavbarMenuToggle, NavbarMenu, NavbarMenuItem } from "@nextui-org/react";
+import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Button, NavbarMenuToggle, NavbarMenu, NavbarMenuItem } from "@nextui-org/react";
 import { usePathname } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
+import Link from "next/link";
 
 export default function NavbarComponent({ sessionSS }: any) {
 
@@ -11,8 +12,8 @@ export default function NavbarComponent({ sessionSS }: any) {
 
 
     const menuItems = [
-        { page: "หน้าแรก", href: "/dashboard"},
-        { page: "หน้าลับเฉพาะ Admin", href: "/protectedroute", roles:"Admin"}
+        { page: "หน้าแรก", href: "/dashboard" },
+        { page: "หน้าลับเฉพาะ Admin", href: "/protectedroute", roles: "Admin" }
     ];
 
 
@@ -35,12 +36,12 @@ export default function NavbarComponent({ sessionSS }: any) {
                             <p className="font-bold text-inherit">X</p>
                         </NavbarBrand>
                         <NavbarItem>
-                            <Link color="foreground" href="/dashboard">
+                            <Link href="/dashboard">
                                 หน้าแรก
                             </Link>
                         </NavbarItem>
-                        {sessionSS === "Admin" || session?.user.roles === "Admin" ? <NavbarItem isActive>
-                            <Link href="/protectedroute" aria-current="page" color="warning">
+                        {session?.user.roles === "Admin" ? <NavbarItem isActive>
+                            <Link href="/protectedroute">
                                 หน้าลับเฉพาะ Admin
                             </Link>
                         </NavbarItem> : null}
@@ -65,15 +66,16 @@ export default function NavbarComponent({ sessionSS }: any) {
                         .filter(item => item.roles === sessionSS)
                         .map((item, index) => (
                             <NavbarMenuItem key={`${item}-${index}`}>
-                                <Link
-                                    className="w-full"
-                                    color={
-                                        index === 2 ? "warning" : index === menuItems.length - 1 ? "danger" : "foreground"
-                                    }
-                                    href={item.href}
-                                    size="lg"
+                                <Link href={item.href}
                                 >
-                                    {item.page}
+                                    <div className="w-full"
+                                        color={
+                                            index === 2 ? "warning" : index === menuItems.length - 1 ? "danger" : "foreground"
+                                        }
+                                    >
+                                        {item.page}
+                                    </div>
+
                                 </Link>
                             </NavbarMenuItem>
                         ))}
