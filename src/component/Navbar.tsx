@@ -1,22 +1,26 @@
+
 "use client"
-import React from "react";
+import React, { useEffect } from "react";
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Button, NavbarMenuToggle, NavbarMenu, NavbarMenuItem } from "@nextui-org/react";
 import { usePathname } from "next/navigation";
-import { signOut } from "next-auth/react";
-import ToggleComponent from "./Toggle";
-import { ThemeSwitcher } from "./Switcher";
+import { signOut, useSession } from "next-auth/react";
 
-export default function NavbarComponent() {
+export default function NavbarComponent({ sessionSS }: any) {
+
+    const { data: session } = useSession()
+
+
     const menuItems = [
-        { page: "หน้าแรก", href: "/dashboard" },
-        { page: "หน้าลับเฉพาะ Admin", href: "/protectedroute" }
+        { page: "หน้าแรก", href: "/dashboard"},
+        { page: "หน้าลับเฉพาะ Admin", href: "/protectedroute", roles:"Admin"}
     ];
+
 
     const pathname = usePathname();
 
     return (
         <>
-            {pathname !== "/" ? (<Navbar  isBordered  >
+            {pathname !== "/" ? (<Navbar isBordered  >
                 <NavbarContent className="sm:flex md:flex hidden" justify="start">
                     <NavbarMenuToggle />
                 </NavbarContent>
@@ -35,11 +39,11 @@ export default function NavbarComponent() {
                                 หน้าแรก
                             </Link>
                         </NavbarItem>
-                        <NavbarItem isActive>
+                        {sessionSS === "Admin" || session?.user.roles === "Admin" ? <NavbarItem isActive>
                             <Link href="/protectedroute" aria-current="page" color="warning">
                                 หน้าลับเฉพาะ Admin
                             </Link>
-                        </NavbarItem>
+                        </NavbarItem> : null}
                     </NavbarContent>
                     <NavbarContent  >
                         {/* <NavbarItem isActive className="flex justify-center w-full">
@@ -57,20 +61,22 @@ export default function NavbarComponent() {
                     </NavbarContent></NavbarContent>
 
                 <NavbarMenu>
-                    {menuItems.map((item, index) => (
-                        <NavbarMenuItem key={`${item}-${index}`}>
-                            <Link
-                                className="w-full"
-                                color={
-                                    index === 2 ? "warning" : index === menuItems.length - 1 ? "danger" : "foreground"
-                                }
-                                href={item.href}
-                                size="lg"
-                            >
-                                {item.page}
-                            </Link>
-                        </NavbarMenuItem>
-                    ))}
+                    {menuItems
+                        .filter(item => item.roles === sessionSS)
+                        .map((item, index) => (
+                            <NavbarMenuItem key={`${item}-${index}`}>
+                                <Link
+                                    className="w-full"
+                                    color={
+                                        index === 2 ? "warning" : index === menuItems.length - 1 ? "danger" : "foreground"
+                                    }
+                                    href={item.href}
+                                    size="lg"
+                                >
+                                    {item.page}
+                                </Link>
+                            </NavbarMenuItem>
+                        ))}
                 </NavbarMenu>
             </Navbar>) : null}
         </>

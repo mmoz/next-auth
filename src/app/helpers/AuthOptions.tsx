@@ -1,4 +1,3 @@
-import { users } from "@/app/helpers/constants";
  import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
@@ -31,12 +30,15 @@ export const authOptions: NextAuthOptions = {
                     });
                     const data = await res.json();
 
-                    if (data.code === 200) {
 
+                    if (data.code === 200) {
                         return data;
                     } else {
                         return null;
                     }
+
+                    
+
 
                 } catch (e) {
                     console.log(e)
@@ -72,12 +74,15 @@ export const authOptions: NextAuthOptions = {
             session.user.userFirstname = token.userFirstname
             session.user.userLastname = token.userLastname
             session.user.roles = token.roles
+
+
             return session
         },
     },
     session: {
         maxAge: 30 * 24 * 60 * 60, // The session will last 30 days
     },
+    
 
 
 }

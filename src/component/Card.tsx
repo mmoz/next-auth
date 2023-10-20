@@ -4,19 +4,20 @@ import { ReactNode, useState } from "react";
 import { Card, CardHeader, CardBody, CardFooter, Image, Button, image } from "@nextui-org/react";
 import { Skeleton } from '@nextui-org/react';
 import { Accordion, AccordionItem } from "@nextui-org/react";
-
+import NextImage from "next/image";
 
 
 export default function CardComponent({ greeting, sub1, sub2, name, img, tracks }: { greeting: ReactNode, sub1: ReactNode, sub2: ReactNode, name: ReactNode, img: ReactNode, tracks: ReactNode }) {
     const { data: session, status } = useSession()
-    const [isLoading, setIsLoading] = useState(true);
+
+
 
     const userName = session?.user?.userFirstname
     const defaultContent =
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.";
     return (
         <>
-            <Card className="col-span-12 sm:col-span-4 relative h-[400px]">
+              <Card className="col-span-12 sm:col-span-4 relative h-[400px]">
                 <CardHeader className="absolute z-10 top-1 flex-col !items-start">
                     <p className="text-tiny text-white/60 uppercase font-bold">{sub1}</p>
                     <h4 className="text-white font-medium text-large">{sub2}</h4>
@@ -24,9 +25,9 @@ export default function CardComponent({ greeting, sub1, sub2, name, img, tracks 
                 <Image
                     removeWrapper
                     alt="Card background"
-                    className="z-0 w-full h-full object-cover"
-                    src={img as string}
-                />
+                    className="z-0 h-full w-full object-cover "
+                    src={img as string}  
+                                    />
                 <div className="w-full absolute bottom-0 z-10 bg-transparent ">
                     <Accordion variant="light">
                         <AccordionItem key="1" aria-label="Accordion 1" title={<span className="text-white"
@@ -41,7 +42,7 @@ export default function CardComponent({ greeting, sub1, sub2, name, img, tracks 
                                 <path d="M18.464 2.114a.998.998 0 00-1.033.063l-13 9a1.003 1.003 0 000 1.645l13 9A1 1 0 0019 21V3a1 1 0 00-.536-.886zM17 19.091L6.757 12 17 4.909v14.182z" />
                             </svg>}
                         >
-                            <div className="overflow-auto max-h-[10rem] md:max-h-[12rem] sm:max-[10rem] bg-white opacity-[0.8]">
+                            <div className="overflow-auto max-h-[10rem] md:max-h-[12rem] sm:max-[10rem] text-white bg-[#434446] opacity-[0.8]">
                                 {defaultContent}
                             </div>
                         </AccordionItem>

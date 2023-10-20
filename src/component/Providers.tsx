@@ -1,13 +1,18 @@
 "use client"
-import React from 'react'
-import {SessionProvider} from 'next-auth/react'
+import React, { useEffect } from 'react'
+import { SessionProvider } from 'next-auth/react'
 
 interface Props {
-    children: React.ReactNode  
-    
-    }
+  children: React.ReactNode
+  session: any
+}
 
-export const Providers = ({children}:Props) => {
-  return <SessionProvider>{children}</SessionProvider>
+
+
+export const Providers = ({ children }: Props, { session }: Props) => {
+
+  
+
+  return <SessionProvider session={session}>{children}</SessionProvider>
 }
 export default Providers

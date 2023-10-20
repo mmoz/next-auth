@@ -1,8 +1,12 @@
 
 import CardComponent from "@/component/Card";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../helpers/AuthOptions";
 
+export default async function Dashboard() {
 
-export default function Dashboard() {
+    const session = await getServerSession(authOptions)
+
 
     const mockupdata = [
         {
@@ -53,7 +57,7 @@ export default function Dashboard() {
         <main className="">
             <div className="flex-col">
                 <div className="flex justify-center mt-5 font-bold text-[#113946]">
-                    <span>Dashboard </span>
+                    <span>Dashboard {session?.user.roles}</span>
                 </div>
                 <div className="flex justify-center mt-5">
                     <div className="w-[90vw]">
