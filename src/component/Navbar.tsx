@@ -1,23 +1,24 @@
 
 "use client"
 import React, { useEffect } from "react";
-import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Button, NavbarMenuToggle, NavbarMenu, NavbarMenuItem } from "@nextui-org/react";
+import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Button, NavbarMenuToggle, NavbarMenu, NavbarMenuItem, Skeleton } from "@nextui-org/react";
 import { usePathname } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 
 export default function NavbarComponent({ sessionSS }: any) {
 
-    const { data: session } = useSession()
+    const { data: session, status } = useSession()
 
 
     const menuItems = [
-        { page: "หน้าแรก", href: "/dashboard" },
-        { page: "หน้าลับเฉพาะ Admin", href: "/protectedroute", roles: "Admin" }
+        { page: "หน้าแรก", href: "/dashboard", roles: ["Admin", "User"] },
+        { page: "หน้าลับเฉพาะ Admin", href: "/protectedroute", roles: ["Admin"] }
     ];
 
 
     const pathname = usePathname();
+
 
     return (
         <>
@@ -33,11 +34,13 @@ export default function NavbarComponent({ sessionSS }: any) {
                 <NavbarContent className="flex justify-between">
                     <NavbarContent className="sm:hidden md:hidden  flex gap-4" justify="center">
                         <NavbarBrand>
-                            <p className="font-bold text-inherit">X</p>
+                            <div className="font-bold text-inherit">{status === "loading" ? <Skeleton className="flex  w-20 h-6" />
+                                : <span>X</span>}</div>
                         </NavbarBrand>
                         <NavbarItem>
                             <Link href="/dashboard">
-                                หน้าแรก
+                                {status === "loading" ? <Skeleton className="flex  w-20 h-6" />
+                                    : <span>หน้าแรก</span>}
                             </Link>
                         </NavbarItem>
                         {session?.user.roles === "Admin" ? <NavbarItem isActive>
@@ -53,17 +56,18 @@ export default function NavbarComponent({ sessionSS }: any) {
                     </NavbarContent>
                     <NavbarContent justify="end">
                         <NavbarItem>
-                            <Button as={Link} className="#FAF8ED" href="#" variant="flat" onClick={() => signOut({
-                                callbackUrl: "/",
-                            })}>
-                                Logout
-                            </Button>
+                            {status === "loading" ? <Skeleton className="flex rounded w-20 h-[2.5rem]" />
+                                : <Button as={Link} className="#FAF8ED" href="#" variant="flat" onClick={() => signOut({
+                                    callbackUrl: "/",
+                                })}>
+                                    Logout
+                                </Button>}
+
                         </NavbarItem>
                     </NavbarContent></NavbarContent>
 
                 <NavbarMenu>
-                    {menuItems
-                        .filter(item => item.roles === sessionSS)
+                    {menuItems.filter((item) => item.roles.includes(session?.user.roles || ""))
                         .map((item, index) => (
                             <NavbarMenuItem key={`${item}-${index}`}>
                                 <Link href={item.href}
