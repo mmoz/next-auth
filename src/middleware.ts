@@ -7,7 +7,7 @@ export default withAuth(
   function middleware(request: NextRequestWithAuth) {
     if (
       request.nextUrl.pathname.startsWith("/protectedroute") &&
-      request.nextauth.token?.roles !== "Admin"
+      request.nextauth.token?.roles !== "admin"
     ) {
       return NextResponse.redirect(new URL("/dashboard", request.url));
     }

@@ -13,15 +13,17 @@ export default function Login() {
     const login: FormEventHandler<HTMLFormElement> = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault()
         const response = await signIn('credentials', {
-            redirect: false,
+            redirect: true,
             username: username,
             password: password,
+            callbackUrl: "/dashboard"
         });
         if (response?.error) {
             alert(response.error)
-        }else{
-            router.push("/dashboard")
         }
+        // }else{
+        //     router.push("/dashboard")
+        // }
     }
     return (
         <main className="w-full h-[100dvh] flex justify-center items-center">

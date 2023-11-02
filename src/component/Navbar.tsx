@@ -34,16 +34,16 @@ export default function NavbarComponent({ sessionSS }: any) {
                 <NavbarContent className="flex justify-between">
                     <NavbarContent className="sm:hidden md:hidden  flex gap-4" justify="center">
                         <NavbarBrand>
-                            <div className="font-bold text-inherit">{status === "loading" ? <Skeleton className="flex  w-20 h-6" />
+                            <div className="font-bold text-inherit">{status === "loading" ? <Skeleton className="flex  w-20 h-6 rounded-md" />
                                 : <span>X</span>}</div>
                         </NavbarBrand>
                         <NavbarItem>
                             <Link href="/dashboard">
-                                {status === "loading" ? <Skeleton className="flex  w-20 h-6" />
+                                {status === "loading" ? <Skeleton className="flex  w-20 h-6 rounded-md" />
                                     : <span>หน้าแรก</span>}
                             </Link>
                         </NavbarItem>
-                        {session?.user.roles === "Admin" ? <NavbarItem isActive>
+                        {session?.user.roles === "admin" ? <NavbarItem isActive>
                             <Link href="/protectedroute">
                                 หน้าลับเฉพาะ Admin
                             </Link>
@@ -56,7 +56,7 @@ export default function NavbarComponent({ sessionSS }: any) {
                     </NavbarContent>
                     <NavbarContent justify="end">
                         <NavbarItem>
-                            {status === "loading" ? <Skeleton className="flex rounded w-20 h-[2.5rem]" />
+                            {status === "loading" ? <Skeleton className="flex rounded w-20 h-[2.5rem] rounded-md" />
                                 : <Button as={Link} className="#FAF8ED" href="#" variant="flat" onClick={() => signOut({
                                     callbackUrl: "/",
                                 })}>

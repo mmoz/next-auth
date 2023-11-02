@@ -1,12 +1,18 @@
 "use client"
-import ApiClient from "@/Utills/interceptor"
+import useAxiosAuth from "@/Utills/hooks/useAxiosAuth";
+import { useState } from "react";
+
 
 export default function protectedRoute() {
+    const axiosAuth = useAxiosAuth();
+    const [data, setData] = useState<any>(null);
+
     const post = async () => {
 
         try {
-            const response = await ApiClient.get("");
-          } catch (error) {
+            const res = await axiosAuth.get(`/users`)
+            setData(res.data)
+        } catch (error) {
             console.error(error);
           }
     }
@@ -16,6 +22,8 @@ export default function protectedRoute() {
             <div className="flex justify-center w-full mt-5">
                 <h1>Protected Route</h1>
                 <button className="bg-white" onClick={post}>c</button>
+                {data && <div>{JSON.stringify(data)}</div>}
+                <button onClick={()=>setData()}>clear</button>
             </div>
         </main>
     )
