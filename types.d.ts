@@ -7,6 +7,7 @@ declare module 'next-auth' {
       refreshToken: Session | null;
       userFirstname: string;
       roles: string;
+      exp: number;
     };
   }
 }

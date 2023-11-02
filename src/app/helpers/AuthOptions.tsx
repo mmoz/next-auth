@@ -1,28 +1,26 @@
 import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
-async function refreshToken(refreshtoken: any): Promise<any> {
+
+export async function refreshtoken(token: any) {
     try {
         const res = await fetch(`http://localhost:4000/api/token`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ refreshToken: refreshtoken }), // Send as an object
+            body: JSON.stringify({ refreshToken: token }),
         });
         const data = await res.json();
-
         if (data.status === 200) {
             return data;
         } else {
             return null;
         }
-
     } catch (e) {
         console.log(e)
     }
 }
-
 
 export const authOptions: NextAuthOptions = {
     providers: [
@@ -80,7 +78,7 @@ export const authOptions: NextAuthOptions = {
                 token.refreshToken = user.data.refreshToken;
                 token.roles = user.data.roles;
                 token.username = user.data.username;
-                token.exp = user.data.exp;
+                token.expired = user.data.expired;
             }
 
             return token;
@@ -90,13 +88,13 @@ export const authOptions: NextAuthOptions = {
             session.user.refreshToken = token.refreshToken;
             session.user.roles = token.roles;
             session.user.username = token.username;
-            session.user.exp = token.exp;
+            session.user.expired = token.expired;
 
-            if (new Date().getTime() > token.exp) {
-                const newToken = await refreshToken(session.user.refreshToken);
+            if (session && session.user.expired < Math.floor(new Date().getTime() / 1000)) {
+                const newToken = await refreshtoken(session.user.refreshToken);
                 if (newToken) {
                     session.user.accessToken = newToken.data.accessToken;
-                    session.user.exp = newToken.data.exp;
+                    session.user.expired = newToken.data.expired;
                 }
             }
 

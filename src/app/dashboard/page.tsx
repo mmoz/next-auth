@@ -2,7 +2,6 @@
 import CardComponent from "@/component/Card";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../helpers/AuthOptions";
-import instance from "@/Utills/ssrinterceptor";
 import axios from "axios";
 
 export default async function Dashboard() {
@@ -21,10 +20,14 @@ export default async function Dashboard() {
             throw new Error(`HTTP error! status: ${res.status}`);
         } else {
             const data = await res.json();
+            console.log(data)
         }
+
     } catch (error) {
         console.error('Error:', error);
     }
+
+    console.log(session?.user.accessToken)
 
 
 

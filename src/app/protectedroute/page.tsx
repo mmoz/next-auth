@@ -5,7 +5,6 @@ import { useState } from "react";
 
 
 export default function protectedRoute() {
-    const axiosAuth = useAxiosAuth();
     const [data, setData] = useState<any>(null);
 
     const post = async () => {
