@@ -1,5 +1,6 @@
 "use client"
 import useAxiosAuth from "@/Utills/hooks/useAxiosAuth";
+import instance from "@/Utills/ssrinterceptor";
 import { useState } from "react";
 
 
@@ -10,7 +11,9 @@ export default function protectedRoute() {
     const post = async () => {
 
         try {
-            const res = await axiosAuth.get(`/users`)
+            // const res = await axiosAuth.get(`/users`)
+            // setData(res.data)
+            const res = await instance.get(`/users`)
             setData(res.data)
         } catch (error) {
             console.error(error);

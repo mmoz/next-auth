@@ -1,6 +1,28 @@
- import NextAuth, { NextAuthOptions } from "next-auth";
+import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { cookies } from 'next/headers'
+
+async function refreshToken(refreshtoken: any): Promise<any> {
+    try {
+        const res = await fetch(`http://localhost:4000/api/token`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ refreshToken: refreshtoken }), // Send as an object
+        });
+        const data = await res.json();
+
+        if (data.status === 200) {
+            return data;
+        } else {
+            return null;
+        }
+
+    } catch (e) {
+        console.log(e)
+    }
+}
+
 
 export const authOptions: NextAuthOptions = {
     providers: [
@@ -21,7 +43,7 @@ export const authOptions: NextAuthOptions = {
                 }
 
                 try {
- 
+
                     const res = await fetch(`http://localhost:4000/api/login`, {
                         method: "POST",
                         headers: {
@@ -30,7 +52,6 @@ export const authOptions: NextAuthOptions = {
                         body: JSON.stringify(credentials),
                     });
                     const data = await res.json();
-                    console.log(data)
 
                     if (data.status === 200) {
                         return data;
@@ -55,29 +76,40 @@ export const authOptions: NextAuthOptions = {
     callbacks: {
         async jwt({ token, user }: { token: any, user: any }) {
             if (user) {
-                token.accessToken = user.data.accessToken
-                token.refreshToken = user.data.refreshToken
-                token.roles = user.data.roles
-                token.username = user.data.username
-                
+                token.accessToken = user.data.accessToken;
+                token.refreshToken = user.data.refreshToken;
+                token.roles = user.data.roles;
+                token.username = user.data.username;
+                token.exp = user.data.exp;
             }
-            return token
+
+            return token;
         },
         async session({ session, token }: { session: any, token: any }) {
-            session.user.accessToken = token.accessToken
-            session.user.refreshToken = token.refreshToken
-            session.user.roles = token.roles
-            session.user.username = token.username
-         
+            session.user.accessToken = token.accessToken;
+            session.user.refreshToken = token.refreshToken;
+            session.user.roles = token.roles;
+            session.user.username = token.username;
+            session.user.exp = token.exp;
+
+            if (new Date().getTime() > token.exp) {
+                const newToken = await refreshToken(session.user.refreshToken);
+                if (newToken) {
+                    session.user.accessToken = newToken.data.accessToken;
+                    session.user.exp = newToken.data.exp;
+                }
+            }
 
 
-            return session
+            return session;
         },
     },
+
+
     session: {
         maxAge: 30 * 24 * 60 * 60, // The session will last 30 days
     },
-    
+
 
 
 }

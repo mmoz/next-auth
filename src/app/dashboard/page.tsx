@@ -2,10 +2,34 @@
 import CardComponent from "@/component/Card";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../helpers/AuthOptions";
+import instance from "@/Utills/ssrinterceptor";
+import axios from "axios";
 
 export default async function Dashboard() {
 
     const session = await getServerSession(authOptions)
+    try {
+        const res = await fetch(`http://localhost:4000/api/users`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                'Authorization': `${session?.user.accessToken}`,
+            },
+        });
+
+        if (!res.ok) {
+            throw new Error(`HTTP error! status: ${res.status}`);
+        } else {
+            const data = await res.json();
+        }
+    } catch (error) {
+        console.error('Error:', error);
+    }
+
+
+
+
+
 
 
     const mockupdata = [
