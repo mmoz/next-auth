@@ -23,7 +23,7 @@ export default function protectedRoute() {
                 <h1>Protected Route</h1>
                 <button className="bg-white" onClick={post}>c</button>
                 {data && <div>{JSON.stringify(data)}</div>}
-                <button onClick={()=>setData()}>clear</button>
+                <button onClick={()=>setData(null)}>clear</button>
             </div>
         </main>
     )
