@@ -81,6 +81,11 @@ export const authOptions: NextAuthOptions = {
                 token.expired = user.data.expired;
             }
 
+            if(token.expired < Math.floor(new Date().getTime() / 1000)+60){
+                const newToken = await refreshtoken(token.refreshToken);
+                return {...token, accessToken: newToken.data.accessToken, expired: newToken.data.expired,}
+            }
+
             return token;
         },
         async session({ session, token }: { session: any, token: any }) {
@@ -90,14 +95,6 @@ export const authOptions: NextAuthOptions = {
             session.user.username = token.username;
             session.user.expired = token.expired;
 
-            if (session && session.user.expired < Math.floor(new Date().getTime() / 1000)+60) {
-                const newToken = await refreshtoken(session.user.refreshToken);
-                if (newToken) {
-                    session.user.accessToken = newToken.data.accessToken;
-                    session.user.expired = newToken.data.expired;
-                }
-            }
-            
             return session;
         },
     },
