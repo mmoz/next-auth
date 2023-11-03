@@ -5,7 +5,7 @@ import { useState } from "react";
 
 
 
-export default function protectedRoute() {
+export default function ProtectedRoute() {
 
     
     const [data, setData] = useState<any>(null);

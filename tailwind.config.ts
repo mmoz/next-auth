@@ -30,7 +30,6 @@ const config: Config = {
       // => @media (max-width: 639px) { ... }
     },
   },
-  darkMode: "class",
   plugins: [nextui()],
 };
 export default config;
