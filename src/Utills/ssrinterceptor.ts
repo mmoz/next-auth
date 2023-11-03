@@ -11,11 +11,10 @@ instance.interceptors.request.use(
   async (config) => {
     // Get the session from NextAuth.js
     const session = await getSession();
-    console.log(session)
 
     // If the session exists and contains an access token, set it on the Authorization header
     if (session && session.user.accessToken) {
-      config.headers.Authorization = `${session.user.accessToken}`;
+      config.headers.Authorization = `Bearer ${session.user.accessToken}`;
     }
 
     return config;

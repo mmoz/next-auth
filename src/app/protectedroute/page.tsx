@@ -4,7 +4,10 @@ import instance from "@/Utills/ssrinterceptor";
 import { useState } from "react";
 
 
+
 export default function protectedRoute() {
+
+    
     const [data, setData] = useState<any>(null);
 
     const post = async () => {

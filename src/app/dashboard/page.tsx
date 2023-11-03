@@ -2,7 +2,13 @@
 import CardComponent from "@/component/Card";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../helpers/AuthOptions";
-import axios from "axios";
+import type { Metadata } from 'next'
+
+
+export const metadata: Metadata = {
+    title: 'Home',
+    description: 'Welcome to Next.js',
+  }
 
 export default async function Dashboard() {
 
@@ -12,7 +18,7 @@ export default async function Dashboard() {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
-                'Authorization': `${session?.user.accessToken}`,
+                'Authorization': `Bearer ${session?.user.accessToken}`,
             },
         });
 
@@ -27,7 +33,6 @@ export default async function Dashboard() {
         console.error('Error:', error);
     }
 
-    console.log(session?.user.accessToken)
 
 
 
