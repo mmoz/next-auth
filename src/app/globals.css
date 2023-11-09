@@ -3,9 +3,9 @@
 @tailwind utilities;
 
 
-body{
+/* body{
   background-color: #FFF2D8;
-}
+} */
 
 .container {
   max-width: 350px;

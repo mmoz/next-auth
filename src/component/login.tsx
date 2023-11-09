@@ -1,12 +1,13 @@
 "use client"
 
-import { FormEvent, FormEventHandler, useState } from "react";
-import { signIn } from 'next-auth/react'
+import { FormEvent, FormEventHandler, useState, useEffect } from "react";
+import { signIn, useSession } from 'next-auth/react'
 import { useRouter } from "next/navigation";
 export default function Login() {
 
     const [username, setUsername] = useState<string>('')
     const [password, setPassword] = useState<string>('')
+    const { data: session } = useSession()
 
     const router = useRouter()
 
@@ -25,6 +26,11 @@ export default function Login() {
         //     router.push("/dashboard")
         // }
     }
+
+    if (session) {
+        router.push("/dashboard")
+    }
+
     return (
         <main className="w-full h-[100dvh] flex justify-center items-center">
             <div className="container">
