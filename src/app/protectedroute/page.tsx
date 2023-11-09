@@ -1,8 +1,5 @@
 import List from "@/component/list/list";
 import TabsContentSection from "@/component/section/TabsContentSection";
-import { useState } from "react";
-
-
 
 export default function ProtectedRoute() {
 
