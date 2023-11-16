@@ -19,20 +19,20 @@ type Tab = {
 
 
 
-export default function TabsContentSection({ itemtab, Component }: Props) {
+export default function TabsContentSection({ itemtab }: Props) {
 
 
     return (
         <div className="flex w-full h-full flex-col">
-            <Tabs aria-label="Dynamic tabs" items={itemtab} color={"success"} variant={"light"} radius={"md"} className="flex justify-start bg-gray-200 rounded-full">
+            <Tabs aria-label="Dynamic tabs" items={itemtab} color={"success"}  variant={"light"} radius={"full"} className="flex justify-start bg-gray-200 rounded-full">
                 {(item) => (
                     <Tab key={item.id} title={item.label} >
                         <div className="flex gap-10 md:flex-col">
                             <div className=" flex-col w-[60vw] md:w-full sm:w-full bg-white px-2 py-2 ">
                                 <div className="grid grid-cols-4  md:grid-cols-2  sm:grid-cols-1 gap-4 ">
                                     {item.content.map((content, index) => (
-                                        <div className={index === 0 ? "col-span-4 h-[300px] md:col-span-2 sm:col-span-1 " : ""}>
-                                            {Component && index === 0 ? <CardImg content={content} /> : <CardContent content={content} />}
+                                        <div className={index === 0 ? "col-span-4 h-[300px] md:col-span-2 sm:col-span-1 " : ""} key={index}>
+                                            {index === 0 ? <CardImg content={content} /> : <CardContent content={content} />}
                                         </div>
                                     ))}
                                 </div>

@@ -93,7 +93,7 @@ export default function ProtectedRoute() {
             </div> */}
             <div className="flex justify-center mt-10">
                 <div className="flex w-[90vw]">
-                    <TabsContentSection itemtab={tabs} Component={List} />
+                    <TabsContentSection itemtab={tabs}  />
                 </div>
             </div>
         </main>
