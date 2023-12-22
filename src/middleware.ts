@@ -1,5 +1,4 @@
 //protected route by role
-
 import { NextRequestWithAuth, withAuth } from "next-auth/middleware";
 import { NextResponse } from "next/server";
 
@@ -9,7 +8,7 @@ export default withAuth(
       request.nextUrl.pathname.startsWith("/protectedroute") &&
       request.nextauth.token?.roles !== "admin"
     ) {
-      return NextResponse.redirect(new URL("/dashboard", request.url));
+      return NextResponse.redirect(new URL("/", request.url));
     }
   },
   {
@@ -20,4 +19,4 @@ export default withAuth(
 );
 
 //protected route
-export const config = { matcher: ["/dashboard", "/protectedroute"] };
+export const config = { matcher: ["/","/protectedroute"] };

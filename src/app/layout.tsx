@@ -3,7 +3,6 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 import Providers from '../component/Providers'
 import { NextUiProviders } from './provider/NextUiProviders'
-import NavbarComponent from '../component/Navbar'
 import { getServerSession } from 'next-auth'
 import { authOptions } from './helpers/AuthOptions'
 
@@ -27,7 +26,6 @@ export default async function RootLayout({
       <body className={inter.className}>
         <Providers session={session}>
           <NextUiProviders>
-            <NavbarComponent sessionSS={session?.user.roles} />
             {children}
           </NextUiProviders>
         </Providers>

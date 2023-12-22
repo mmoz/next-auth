@@ -1,8 +1,7 @@
 
 "use client"
-import React, { useEffect } from "react";
+import React from "react";
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Button, NavbarMenuToggle, NavbarMenu, NavbarMenuItem, Skeleton } from "@nextui-org/react";
-import { usePathname } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 
@@ -17,12 +16,11 @@ export default function NavbarComponent({ sessionSS }: any) {
     ];
 
 
-    const pathname = usePathname();
 
 
     return (
         <>
-            {pathname !== "/" ? (<Navbar isBordered  >
+            <Navbar isBordered  >
                 <NavbarContent className="sm:flex md:flex hidden" justify="start">
                     <NavbarMenuToggle />
                 </NavbarContent>
@@ -84,7 +82,7 @@ export default function NavbarComponent({ sessionSS }: any) {
                             </NavbarMenuItem>
                         ))}
                 </NavbarMenu>
-            </Navbar>) : null}
+            </Navbar>
         </>
 
 

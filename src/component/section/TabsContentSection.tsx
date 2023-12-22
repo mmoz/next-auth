@@ -21,7 +21,6 @@ type Tab = {
 
 export default function TabsContentSection({ itemtab }: Props) {
 
-
     return (
         <div className="flex w-full h-full flex-col">
             <Tabs aria-label="Dynamic tabs" items={itemtab} color={"success"}  variant={"light"} radius={"full"} className="flex justify-start bg-gray-200 rounded-full">
